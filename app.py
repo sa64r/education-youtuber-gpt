@@ -28,15 +28,12 @@ st.title("📖 Education YouTuber GPT")
 
 query = st.text_input("What do you want to ask?")
 
-if query:
-    query_result = query_collection(query, collection, 5)
-    print(query_result)
+NUMBER_OF_RESULTS = 5
 
+if query:
+    query_result = query_collection(query, collection, NUMBER_OF_RESULTS)
     # TODO - filter out responses where distance is greater than something
 
     docs = map_query_response_to_langchain_document(query_result)
     response = chain.run(input_documents=docs, question=query)
-
-    print(response)
-
     st.write(response)
