@@ -12,7 +12,6 @@ from utils import (
 )
 
 client = load_chroma_client()
-collection = get_or_create_collection("test", client)
 
 
 # setup env
@@ -25,6 +24,9 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 
 st.title("📖 Education YouTuber GPT")
+youtuber = st.selectbox("Select a YouTuber", ["ali-abdaal", "test"])
+
+collection = get_or_create_collection(youtuber, client)
 
 query = st.text_input("What do you want to ask?")
 
