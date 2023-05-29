@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Everything in chroma_db folder
-BuildingData/chroma_db/*
+chroma_db/*

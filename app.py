@@ -1,26 +1,42 @@
 import os
 import streamlit as st
 from langchain.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
 from dotenv import load_dotenv
+
+from utils import (
+    get_or_create_collection,
+    load_chroma_client,
+    query_collection,
+    map_query_response_to_langchain_document,
+)
+
+client = load_chroma_client()
+collection = get_or_create_collection("test", client)
+
 
 # setup env
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
+llm = OpenAI(temperature=0.9, openai_api_key=OPENAI_API_KEY)
+chain = load_qa_chain(llm, chain_type="stuff")
+
+
 st.title("📖 Education YouTuber GPT")
-selected_youtuber = st.selectbox(
-    "Select a YouTuber",
-    ("Ali Abdaal", "SA64R"),
-)
 
-prompt = st.text_input("What do you want to ask %s?" % selected_youtuber)
+query = st.text_input("What do you want to ask?")
 
+if query:
+    query_result = query_collection(query, collection, 5)
+    print(query_result)
 
-llm = OpenAI(temperature=0.5)
-if prompt:
-    response = llm(
-        "Respond as if you are %s, to this prompt: %s" % (selected_youtuber, prompt)
-    )
+    # TODO - filter out responses where distance is greater than something
+
+    docs = map_query_response_to_langchain_document(query_result)
+    response = chain.run(input_documents=docs, question=query)
+
+    print(response)
 
     st.write(response)
