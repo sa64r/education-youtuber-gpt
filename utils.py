@@ -34,3 +34,14 @@ def map_query_response_to_langchain_document(result):
 
 def clear_db(client):
     client.reset()
+
+
+def add_list_of_text_to_collection(text_list: list, collection):
+    collection_count = collection.count()
+    collection.add(
+        documents=text_list,
+        ids=[
+            str(n)
+            for n in list(range(collection_count, collection_count + len(text_list)))
+        ],
+    )

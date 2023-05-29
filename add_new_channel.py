@@ -1,0 +1,4 @@
+from populate_db_with_youtube_transcripts import add_channel_transcripts_to_db
+from utils import load_chroma_client
+
+add_channel_transcripts_to_db("ali-abdaal", "UCoOae5nYA7VqaXzerajD0lg")

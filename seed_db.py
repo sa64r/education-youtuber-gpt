@@ -4,10 +4,10 @@ client = load_chroma_client()
 
 clear_db(client)
 
-test_collection = get_or_create_collection("test", client)
+sa64r_collection = get_or_create_collection("sa64r", client)
 
 
-test_collection.add(
+sa64r_collection.add(
     documents=[
         "To make a sandwich you need to put bread together",
         "Building a plane is very hard",
