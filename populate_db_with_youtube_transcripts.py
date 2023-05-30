@@ -3,7 +3,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import scrapetube
 from utils import (
     add_list_of_text_to_collection,
-    clear_db,
     get_or_create_collection,
     load_chroma_client,
 )
