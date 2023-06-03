@@ -30,15 +30,12 @@ youtuber = st.selectbox("Select a YouTuber", collections)
 
 collection = client.get_collection(youtuber)
 
-print(collection.count())
-
 query = st.text_input("What do you want to ask?")
 
 NUMBER_OF_RESULTS = 5
 
 if query:
     query_result = query_collection(query, collection, NUMBER_OF_RESULTS)
-    print(query_result)
 
     docs = map_query_response_to_langchain_document(query_result)
     response = chain.run(input_documents=docs, question=query)
