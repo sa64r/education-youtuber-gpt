@@ -1,12 +1,12 @@
 # MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
-CHANNEL_ID = "UCcc6bSEKsxrlDmipLQjbGHg"
-CHANNEL_NAME = "SA64R"
+CHANNEL_ID = "UCoOae5nYA7VqaXzerajD0lg"
+CHANNEL_NAME = "Ali-Abdaal"
 
 import scrapetube
 from youtube_transcript_api import YouTubeTranscriptApi
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-from backend.utils.chromadb import get_client
+from utils.chromadb import get_client
 
 
 # pull youtube videos from channel
@@ -29,7 +29,7 @@ def split_transcription_into_chunks(transcription: str):
 
 # create channel collections
 def create_channel_collection(channel_name: str):
-    return get_client().get_or_create_collection(channel_name)
+    return get_client(".chromadb").get_or_create_collection(channel_name)
 
 
 # add list of transcription snippets to collection

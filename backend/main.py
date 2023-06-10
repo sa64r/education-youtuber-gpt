@@ -7,6 +7,7 @@ import os
 # setup env
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+PERSIST_DIRECTORY = "backend/.chromadb"
 
 # load llm and chain
 llm = OpenAI(temperature=0.9, openai_api_key=OPENAI_API_KEY)
@@ -20,12 +21,12 @@ class LangchainDocument:
 
 
 def collections_in_db():
-    return get_client().list_collections()
+    return get_client(PERSIST_DIRECTORY).list_collections()
 
 
 def query_collection(collection_name, query):
     return (
-        get_client()
+        get_client(PERSIST_DIRECTORY)
         .get_collection(collection_name)
         .query(query_texts=[query], n_results=5)
     )
