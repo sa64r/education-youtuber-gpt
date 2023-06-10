@@ -1,6 +1,6 @@
 # MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
-CHANNEL_ID = "UCoOae5nYA7VqaXzerajD0lg"
-CHANNEL_NAME = "Ali-Abdaal"  # cannot have spaces
+CHANNEL_ID = "UCcc6bSEKsxrlDmipLQjbGHg"
+CHANNEL_NAME = "SA64R"  # cannot have spaces
 
 import scrapetube
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -33,10 +33,11 @@ def create_channel_collection(channel_name: str):
 
 
 # add list of transcription snippets to collection
-def add_list_of_text_to_collection(text_list, collection):
+def add_list_of_text_to_collection(text_list: list[str], video_id: str, collection):
     collection_count = collection.count()
     collection.add(
         documents=text_list,
+        metadatas=[{"video_id": video_id} for _ in text_list],
         ids=[
             str(n)
             for n in list(range(collection_count, collection_count + len(text_list)))
@@ -62,6 +63,7 @@ def main():
                 split_transcription_into_chunks(
                     get_full_transcription_of_video(video_id)
                 ),
+                video_id,
                 collection,
             )
         except:

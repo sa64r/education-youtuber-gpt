@@ -41,9 +41,14 @@ def map_query_response_to_langchain_document(
     )
 
 
-def get_answer(collection_name: str, query: str) -> str:
+def get_answer(collection_name: str, query: str):
     db_query_response = query_collection(collection_name, query)
+    metadatas = db_query_response["metadatas"][0]
+    relevant_video_id: list[str] = list(
+        map(lambda metadata: metadata["video_id"], metadatas)
+    )
+    unique_video_ids = list(set(relevant_video_id))
     langchain_documents = map_query_response_to_langchain_document(db_query_response)
     response = chain.run(input_documents=langchain_documents, question=query)
 
-    return response
+    return response, unique_video_ids
