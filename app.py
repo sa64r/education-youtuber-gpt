@@ -34,7 +34,7 @@ if query:
 
 
 if query and relevant_video_ids:
-    st.write("Want more information, check out these recommended videos:")
+    st.write("Want more information, these videos may be relevant:")
     columns = st.columns(2)
 
     for i in range(0, len(relevant_video_ids), 2):
