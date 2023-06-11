@@ -56,4 +56,4 @@ else:
                 except:
                     pass
     else:
-        st.warning("No channels uploaded.")
+        st.warning("No channels uploaded, please upload a channel first.")
