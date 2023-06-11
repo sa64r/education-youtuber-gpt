@@ -20,8 +20,8 @@ if not open_ai_api_key:
 else:
     # select channel
 
-    collections = collections_in_db() if collections_in_db() else []
-    collection_names = list(map(lambda c: c.name, collections))
+    collections = collections_in_db()
+    collection_names = list(map(lambda c: c.name, collections if collections else []))
 
     channel = st.selectbox(
         "Select a YouTube Channel",
