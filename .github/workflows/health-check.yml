@@ -1,0 +1,13 @@
+name: Health Check
+
+on: [push]
+
+jobs:
+    health-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Ping my site
+              uses: Leocardoso94/is-my-site-up@v1.2
+              with:
+                site: https://sa64r-education-youtuber-gpt.streamlit.app/
+
