@@ -1,5 +1,7 @@
 # Education YouTuber GPT
 
+STATUS: MVP
+
 This project is to create a better way to find the answers you're looking for from specific youtubers. You select a channel from the dropdown and then ask the question you want. You will be presented with a plain text answer and a selection of related videos you can watch if you would like further information
 
 Demo:
