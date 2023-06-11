@@ -21,7 +21,9 @@ jobs:
         - name: Analysing the code with pylint
           run: |
             pylint $(git ls-files '*.py')
+            
     health-check:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Ping my site
