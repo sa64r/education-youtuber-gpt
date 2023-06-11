@@ -1,27 +1,33 @@
-from backend.utils.chromadb import get_client
-from dotenv import load_dotenv
-from langchain.llms import OpenAI
-from langchain.chat_models import ChatOpenAI
+""" This module contains the main logic for the backend. """
 from langchain.chains.question_answering import load_qa_chain
-import os
+from langchain.chat_models import ChatOpenAI
+from dotenv import load_dotenv
+
+# pylint: disable=import-error
+from backend.utils.chromadb_utils import get_client
+
 
 # setup env
 load_dotenv()
-# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PERSIST_DIRECTORY = "backend/.chromadb"
 
 
+# pylint: disable=too-few-public-methods
 class LangchainDocument:
+    """A document for the langchain"""
+
     def __init__(self, page_content: str):
         self.page_content = page_content
         self.metadata = {}
 
 
 def collections_in_db():
+    """Returns a list of collections in the database"""
     return get_client(PERSIST_DIRECTORY).list_collections()
 
 
 def query_collection(collection_name, query, budget):
+    """Returns a query response from the database"""
     return (
         get_client(PERSIST_DIRECTORY)
         .get_collection(collection_name)
@@ -32,6 +38,7 @@ def query_collection(collection_name, query, budget):
 def map_query_response_to_langchain_document(
     query_response,
 ) -> list[LangchainDocument]:
+    """Returns a list of LangchainDocuments from a query response"""
     documents = query_response["documents"][0]
     return list(
         map(lambda doc_text: LangchainDocument(page_content=doc_text), documents)
@@ -39,6 +46,7 @@ def map_query_response_to_langchain_document(
 
 
 def get_answer(collection_name: str, query: str, openai_api_key: str, budget: int):
+    """Returns a plain text answer with the video ids that were used to generate it"""
     db_query_response = query_collection(collection_name, query, budget)
     metadatas = db_query_response["metadatas"][0]
     relevant_video_id: list[str] = list(
