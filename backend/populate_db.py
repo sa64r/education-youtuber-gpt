@@ -5,11 +5,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from utils.chromadb_utils import get_client
 
 
-# MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
-CHANNEL_ID = "UC_mYaQAE6-71rjSN6CeCA-g"
-CHANNEL_NAME = "NeetCode"  # cannot have spaces
-
-
 # pull youtube videos from channel
 def get_youtube_videos(channel_id):
     """Returns a list of video ids from a channel"""
@@ -53,14 +48,21 @@ def add_list_of_text_to_collection(text_list: list[str], video_id: str, collecti
 
 def main():
     """Main function"""
+
+    # MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
+    channel_id = "UC_mYaQAE6-71rjSN6CeCA-g"
+    channel_name = "NeetCode"  # cannot have spaces
+
+    channel_name = channel_name.replace(" ", "_")
+
     print("starting")
 
     # get video ids from channel
-    video_ids = get_youtube_videos(CHANNEL_ID)
+    video_ids = get_youtube_videos(channel_id)
     print(video_ids)
 
     # create channel collection
-    collection = create_channel_collection(CHANNEL_NAME)
+    collection = create_channel_collection(channel_name)
     print(collection.name)
 
     # add video transcriptions to collection
