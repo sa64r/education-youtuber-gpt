@@ -7,12 +7,8 @@ import os
 
 # setup env
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PERSIST_DIRECTORY = "backend/.chromadb"
-
-# load llm and chain
-llm = ChatOpenAI(temperature=0.9, openai_api_key=OPENAI_API_KEY, model="gpt-3.5-turbo")
-chain = load_qa_chain(llm, chain_type="stuff")
 
 
 class LangchainDocument:
@@ -42,7 +38,7 @@ def map_query_response_to_langchain_document(
     )
 
 
-def get_answer(collection_name: str, query: str):
+def get_answer(collection_name: str, query: str, openai_api_key: str):
     db_query_response = query_collection(collection_name, query)
     metadatas = db_query_response["metadatas"][0]
     relevant_video_id: list[str] = list(
@@ -50,6 +46,13 @@ def get_answer(collection_name: str, query: str):
     )
     unique_video_ids = list(set(relevant_video_id))
     langchain_documents = map_query_response_to_langchain_document(db_query_response)
+
+    # load llm and chain
+    llm = ChatOpenAI(
+        temperature=0.9, openai_api_key=openai_api_key, model="gpt-3.5-turbo"
+    )
+    chain = load_qa_chain(llm, chain_type="stuff")
+
     response = chain.run(input_documents=langchain_documents, question=query)
 
     return response, unique_video_ids

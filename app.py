@@ -12,41 +12,46 @@ st.markdown(
     """
 )
 
-# select channel
+open_ai_api_key = st.text_input("Enter your OpenAI API Key")
 
-collections = collections_in_db()
-collectionNames = list(map(lambda c: c.name, collections))
+if not open_ai_api_key:
+    st.warning("Please enter your OpenAI API Key")
 
-channel = st.selectbox(
-    "Select a YouTube Channel",
-    collectionNames,
-)
+else:
+    # select channel
 
-# text input for query
-query = st.text_input("Ask a question")
+    collections = collections_in_db() if collections_in_db() else []
+    collection_names = list(map(lambda c: c.name, collections))
 
-answer, relevant_video_ids = get_answer(channel, query)
+    channel = st.selectbox(
+        "Select a YouTube Channel",
+        collection_names,
+    )
 
-# output
-if query:
-    st.write(answer)
-    st.divider()
+    # text input for query
+    query = st.text_input("Ask a question")
 
+    answer, relevant_video_ids = get_answer(channel, query, open_ai_api_key)
 
-if query and relevant_video_ids:
-    st.write("Want more information, these videos may be relevant:")
-    columns = st.columns(2)
+    # output
+    if query:
+        st.write(answer)
+        st.divider()
 
-    for i in range(0, len(relevant_video_ids), 2):
-        with columns[0]:
-            video_id_1 = relevant_video_ids[i]
-            video_url_1 = "https://www.youtube.com/watch?v=%s" % video_id_1
-            st.video(video_url_1)
+    if query and relevant_video_ids:
+        st.write("Want more information, these videos may be relevant:")
+        columns = st.columns(2)
 
-        try:
-            video_id_2 = relevant_video_ids[i + 1]
-            video_url_2 = "https://www.youtube.com/watch?v=%s" % video_id_2
-            with columns[1]:
-                st.video(video_url_2)
-        except:
-            pass
+        for i in range(0, len(relevant_video_ids), 2):
+            with columns[0]:
+                video_id_1 = relevant_video_ids[i]
+                video_url_1 = "https://www.youtube.com/watch?v=%s" % video_id_1
+                st.video(video_url_1)
+
+            try:
+                video_id_2 = relevant_video_ids[i + 1]
+                video_url_2 = "https://www.youtube.com/watch?v=%s" % video_id_2
+                with columns[1]:
+                    st.video(video_url_2)
+            except:
+                pass
