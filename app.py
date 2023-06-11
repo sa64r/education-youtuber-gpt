@@ -55,3 +55,5 @@ else:
                         st.video(video_url_2)
                 except:
                     pass
+    else:
+        st.warning("No channels uploaded.")
