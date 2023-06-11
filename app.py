@@ -16,7 +16,7 @@ st.markdown(
 with st.expander("Settings ⚙️", expanded=True):
     open_ai_api_key = st.text_input(
         "Enter your OpenAI API Key, you can get yours from"
-        + "(https://platform.openai.com/account/api-keys)",
+        + " (https://platform.openai.com/account/api-keys)",
         type="password",
     )
     budget = st.slider(
