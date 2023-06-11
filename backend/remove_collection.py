@@ -1,6 +1,6 @@
 from utils.chromadb import get_client
 
-COLLECTION_NAME_TO_DELETE = "SQuotient"
+COLLECTION_NAME_TO_DELETE = "NeetCode"
 
 
 # remove collection
