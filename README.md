@@ -37,7 +37,7 @@ deactivate
 
  
 ### To add a new youtube channel to the db do the following:
-1. Assign the constants in `populate_db.py` to the appropriate values to `CHANNEL_ID` and `CHANNEL_NAME`
+1. Assign the constants in `populate_db.py` to the appropriate values to `channel_id` and `channel_name` in `main()`
 2. Navigate to the `backend` directory by running:
 ```
 cd backend
