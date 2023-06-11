@@ -12,7 +12,7 @@ st.markdown(
     """
 )
 
-open_ai_api_key = st.text_input("Enter your OpenAI API Key")
+open_ai_api_key = st.text_input("Enter your OpenAI API Key", type="password")
 
 if not open_ai_api_key:
     st.warning("Please enter your OpenAI API Key")
