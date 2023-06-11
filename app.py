@@ -1,3 +1,4 @@
+""" Streamlit app for YouTuber GPT """
 import streamlit as st
 
 from backend.main import collections_in_db, get_answer
@@ -14,11 +15,13 @@ st.markdown(
 
 with st.expander("Settings ⚙️", expanded=True):
     open_ai_api_key = st.text_input(
-        "Enter your OpenAI API Key, you can get yours from (https://platform.openai.com/account/api-keys)",
+        "Enter your OpenAI API Key, you can get yours from"
+        + "(https://platform.openai.com/account/api-keys)",
         type="password",
     )
     budget = st.slider(
-        "Budget, the higher you set this value the better the response will be, but it will cost you more",
+        "Budget, the higher you set this value the better the response will be,"
+        + " but it will cost you more",
         min_value=1,
         max_value=9,
         value=5,
@@ -57,15 +60,15 @@ else:
             for i in range(0, len(relevant_video_ids), 2):
                 with columns[0]:
                     video_id_1 = relevant_video_ids[i]
-                    video_url_1 = "https://www.youtube.com/watch?v=%s" % video_id_1
+                    video_url_1 = f"https://www.youtube.com/watch?v={video_id_1}"
                     st.video(video_url_1)
 
                 try:
                     video_id_2 = relevant_video_ids[i + 1]
-                    video_url_2 = "https://www.youtube.com/watch?v=%s" % video_id_2
+                    video_url_2 = f"https://www.youtube.com/watch?v={video_id_2}"
                     with columns[1]:
                         st.video(video_url_2)
-                except:
+                except IndexError:
                     pass
     else:
         st.warning("No channels uploaded, please upload a channel first.")
