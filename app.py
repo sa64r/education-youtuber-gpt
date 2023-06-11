@@ -12,16 +12,11 @@ st.markdown(
     """
 )
 
-open_ai_api_key = st.text_input(
-    "Enter your OpenAI API Key, you can get yours from (https://platform.openai.com/account/api-keys)",
-    type="password",
-)
-
-
-if not open_ai_api_key:
-    st.warning("Please enter your OpenAI API key to use this app")
-
-else:
+with st.expander("Settings ⚙️", expanded=True):
+    open_ai_api_key = st.text_input(
+        "Enter your OpenAI API Key, you can get yours from (https://platform.openai.com/account/api-keys)",
+        type="password",
+    )
     budget = st.slider(
         "Budget, the higher you set this value the better the response will be, but it will cost you more",
         min_value=1,
@@ -30,6 +25,11 @@ else:
         step=1,
     )
 
+
+if not open_ai_api_key:
+    st.warning("Please enter your OpenAI API key to use this app")
+
+else:
     # select channel
     collections = collections_in_db()
     if collections:
