@@ -1,6 +1,6 @@
 # MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
-CHANNEL_ID = "UCS6SES6btXx2tVFzWy4oToA"
-CHANNEL_NAME = "SamuelLeeds"  # cannot have spaces
+CHANNEL_ID = "UC_mYaQAE6-71rjSN6CeCA-g"
+CHANNEL_NAME = "NeetCode"  # cannot have spaces
 
 import scrapetube
 from youtube_transcript_api import YouTubeTranscriptApi
