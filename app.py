@@ -3,7 +3,7 @@ import streamlit as st
 from backend.main import collections_in_db, get_answer
 
 #  title
-st.title("📚📹 YouTube Channel GPT")
+st.title("📚📹 YouTuber GPT")
 
 #  description
 st.markdown(

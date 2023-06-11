@@ -1,6 +1,7 @@
 from backend.utils.chromadb import get_client
 from dotenv import load_dotenv
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 import os
 
@@ -10,7 +11,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PERSIST_DIRECTORY = "backend/.chromadb"
 
 # load llm and chain
-llm = OpenAI(temperature=0.9, openai_api_key=OPENAI_API_KEY)
+llm = ChatOpenAI(temperature=0.9, openai_api_key=OPENAI_API_KEY, model="gpt-3.5-turbo")
 chain = load_qa_chain(llm, chain_type="stuff")
 
 
