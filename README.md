@@ -3,6 +3,7 @@
 This project is to create a better way to find the answers you're looking for from specific youtubers. You select a channel from the dropdown and then ask the question you want. You will be presented with a plain text answer and a selection of related videos you can watch if you would like further information
 
 Demo:
+
 https://github.com/sa64r/education-youtuber-gpt/assets/64925510/f2b3d783-1c4e-48a8-946b-204fa3d15c14
 
 ### Setting up the environment:
