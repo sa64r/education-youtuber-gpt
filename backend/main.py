@@ -21,11 +21,11 @@ def collections_in_db():
     return get_client(PERSIST_DIRECTORY).list_collections()
 
 
-def query_collection(collection_name, query):
+def query_collection(collection_name, query, budget):
     return (
         get_client(PERSIST_DIRECTORY)
         .get_collection(collection_name)
-        .query(query_texts=[query], n_results=5)
+        .query(query_texts=[query], n_results=budget)
     )
 
 
@@ -38,8 +38,8 @@ def map_query_response_to_langchain_document(
     )
 
 
-def get_answer(collection_name: str, query: str, openai_api_key: str):
-    db_query_response = query_collection(collection_name, query)
+def get_answer(collection_name: str, query: str, openai_api_key: str, budget: int):
+    db_query_response = query_collection(collection_name, query, budget)
     metadatas = db_query_response["metadatas"][0]
     relevant_video_id: list[str] = list(
         map(lambda metadata: metadata["video_id"], metadatas)

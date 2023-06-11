@@ -17,10 +17,19 @@ open_ai_api_key = st.text_input(
     type="password",
 )
 
+
 if not open_ai_api_key:
-    st.warning("Please enter your OpenAI API Key")
+    st.warning("Please enter your OpenAI API key to use this app")
 
 else:
+    budget = st.slider(
+        "Budget, the higher you set this value the better the response will be, but it will cost you more",
+        min_value=1,
+        max_value=9,
+        value=5,
+        step=1,
+    )
+
     # select channel
     collections = collections_in_db()
     if collections:
@@ -34,7 +43,7 @@ else:
         # text input for query
         query = st.text_input("Ask a question")
 
-        answer, relevant_video_ids = get_answer(channel, query, open_ai_api_key)
+        answer, relevant_video_ids = get_answer(channel, query, open_ai_api_key, budget)
 
         # output
         if query:
