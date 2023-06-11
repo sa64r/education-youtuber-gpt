@@ -57,3 +57,5 @@ pip install -r requirements.txt
 ```
 streamlit run app.py
 ```
+
+3. Enter your OpenAI API key where indicated
