@@ -6,7 +6,7 @@ This project is to create a better way to find the answers you're looking for fr
 
 Demo:
 
-https://github.com/sa64r/education-youtuber-gpt/assets/64925510/f2b3d783-1c4e-48a8-946b-204fa3d15c14
+https://github.com/sa64r/education-youtuber-gpt/assets/64925510/8cb9711e-e32b-4b0c-910a-a61aba27f559
 
 ### Setting up the environment:
 1. Install `python 3.8.5`
