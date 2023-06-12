@@ -16,5 +16,3 @@ def main():
 
 
 main()
-
-print("Hi")
