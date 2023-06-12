@@ -19,9 +19,6 @@ jobs:
         - name: Analysing the code with pylint
           run: |
                 pylint $(git ls-files '*.py')
-        - name: Run streamlit
-          run: |
-            streamlit run app.py
         
     health-check:
         needs: build
