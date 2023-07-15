@@ -46,10 +46,13 @@ else:
         # text input for query
         query = st.text_input("Ask a question")
 
-        answer, relevant_video_ids = get_answer(channel, query, open_ai_api_key, budget)
+        ask_pressed = st.button("Ask")
 
         # output
-        if query:
+        if query and ask_pressed:
+            answer, relevant_video_ids = get_answer(
+                channel, query, open_ai_api_key, budget
+            )
             st.write(answer)
             st.divider()
 
