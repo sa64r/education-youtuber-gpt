@@ -2,7 +2,7 @@
 import scrapetube
 from youtube_transcript_api import YouTubeTranscriptApi
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from utils.chromadb_utils import get_client
+from backend.utils.chromadb_utils import get_client
 
 
 # pull youtube videos from channel
@@ -29,12 +29,13 @@ def split_transcription_into_chunks(transcription: str):
 # create channel collections
 def create_channel_collection(channel_name: str):
     """Returns a collection for a channel"""
-    return get_client(".chromadb").get_or_create_collection(channel_name)
+    return get_client("backend/.chromadb").get_or_create_collection(channel_name)
 
 
 # add list of transcription snippets to collection
 def add_list_of_text_to_collection(text_list: list[str], video_id: str, collection):
     """Adds a list of text snippets to a collection"""
+    print(collection)
     collection_count = collection.count()
     collection.add(
         documents=text_list,
@@ -46,14 +47,10 @@ def add_list_of_text_to_collection(text_list: list[str], video_id: str, collecti
     )
 
 
-def main():
+def main(channel_id: str, channel_name: str):
     """Main function"""
 
-    # MANUALLY SET THESE VALUES BEFORE RUNNING THE SCRIPT
-    channel_id = "UC_mYaQAE6-71rjSN6CeCA-g"
-    channel_name = "NeetCode"  # cannot have spaces
-
-    channel_name = channel_name.replace(" ", "_")
+    channel_name = channel_name.replace(" ", "-")
 
     print("starting")
 
@@ -68,10 +65,14 @@ def main():
     # add video transcriptions to collection
     for video_id in video_ids:
         try:
+            transcription_of_video = get_full_transcription_of_video(video_id)
+
+            chunked_transcription = split_transcription_into_chunks(
+                transcription_of_video
+            )
+
             add_list_of_text_to_collection(
-                split_transcription_into_chunks(
-                    get_full_transcription_of_video(video_id)
-                ),
+                chunked_transcription,
                 video_id,
                 collection,
             )
@@ -79,7 +80,13 @@ def main():
             print(f"failed on {video_id}")
         print(collection.count())
 
-    print("done")
+    get_client("backend/.chromadb").list_collections()
+
+    return True
 
 
-main()
+# IF YOU WANT TO RUN THIS SCRIPT, UNCOMMENT THE FOLLOWING LINE
+# main(
+#     channel_id="UC_mYaQAE6-71rjSN6CeCA-g",
+#     channel_name="NeetCode",
+# )
