@@ -2,6 +2,7 @@
 import scrapetube
 from youtube_transcript_api import YouTubeTranscriptApi
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from utils.chromadb_utils import get_client
 
 PERSIST_DIRECTORY = "backend/.chromadb"
 
@@ -30,7 +31,7 @@ def split_transcription_into_chunks(transcription: str):
 # create channel collections
 def create_channel_collection(channel_name: str, client):
     """Returns a collection for a channel"""
-    return client.get_or_create_collection(channel_name)
+    return client.create_collection(channel_name)
 
 
 # add list of transcription snippets to collection
@@ -47,10 +48,14 @@ def add_list_of_text_to_collection(text_list: list[str], video_id: str, collecti
     )
 
 
-def main(channel_id: str, channel_name: str, client):
+def main(channel_id: str, channel_name: str):
     """Main function"""
 
+    client = get_client(PERSIST_DIRECTORY)
+
     channel_name = channel_name.replace(" ", "-")
+
+    print("starting")
 
     # get video ids from channel
     video_ids = get_youtube_videos(channel_id)
@@ -58,6 +63,7 @@ def main(channel_id: str, channel_name: str, client):
 
     # create channel collection
     collection = create_channel_collection(channel_name, client)
+    print(collection)
 
     # add video transcriptions to collection
     for video_id in video_ids:
@@ -77,4 +83,14 @@ def main(channel_id: str, channel_name: str, client):
             print(f"failed on {video_id}")
         print(collection.count())
 
+    print("Done")
+
+    print(client.get_collection(channel_name))
+
     return True
+
+
+main(
+    channel_id="UCGIf6KmaSbdcu9s2xrIsyoA",
+    channel_name="az and riz",
+)

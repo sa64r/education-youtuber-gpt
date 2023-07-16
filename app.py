@@ -1,7 +1,7 @@
 """ Streamlit app for YouTuber GPT """
 import streamlit as st
 
-from backend.main import collections_in_db, get_answer
+from backend.main import collections_in_db, get_answer, populate_db
 
 #  title
 st.title("📚📹 YouTuber GPT")
@@ -36,6 +36,7 @@ else:
     # select channel
     collections = collections_in_db()
     if collections:
+        print(collections)
         collection_names = list(map(lambda c: c.name, collections))
 
         channel = st.selectbox(
@@ -75,3 +76,15 @@ else:
                     pass
     else:
         st.warning("No channels uploaded, please upload a channel first.")
+
+    # sidebar
+    st.sidebar.title("Add another youtube channel")
+    channel_id = st.sidebar.text_input("Enter a YouTube Channel ID")
+    channel_name = st.sidebar.text_input("Enter the YouTube Channel's Name (no spaces)")
+    pressed = st.sidebar.button("Add Channel")
+    if channel_id and channel_name and pressed:
+        st.sidebar.write("Processing channel, this may take a few minutes...")
+        DONE = populate_db(channel_name, channel_id)
+
+        if DONE:
+            st.sidebar.success(f"The channel {channel_name} is successfully added!")

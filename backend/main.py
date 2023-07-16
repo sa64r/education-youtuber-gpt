@@ -2,6 +2,8 @@
 from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
 from dotenv import load_dotenv
+from backend.populate_db import main
+
 
 # pylint: disable=import-error
 from backend.utils.chromadb_utils import get_client
@@ -64,3 +66,15 @@ def get_answer(collection_name: str, query: str, openai_api_key: str, budget: in
     response = chain.run(input_documents=langchain_documents, question=query)
 
     return response, unique_video_ids
+
+
+def populate_db(
+    channel_name: str,
+    channel_id: str,
+):
+    """Populates the database with a channel"""
+    return main(
+        channel_name=channel_name,
+        channel_id=channel_id,
+        client=get_client(PERSIST_DIRECTORY),
+    )
