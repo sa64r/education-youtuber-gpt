@@ -90,7 +90,6 @@ def main(channel_id: str, channel_name: str):
     return True
 
 
-# IF YOU WANT TO RUN THIS SCRIPT, UNCOMMENT THE FOLLOWING LINE
 main(
     channel_id="UCGIf6KmaSbdcu9s2xrIsyoA",
     channel_name="az and riz",
